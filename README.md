@@ -1,12 +1,17 @@
-# 🧩 Trend Line Task (Full Authentication and Mock-Up Design With Next.js)
+# ✅ Task Manager (Full Authentication and Task Management With Next.js)
 
-This project is a modern **Next.js (App Router)** application built with TypeScript, Flowbite React, and React Hot Toast.  
-It includes authentication guard logic, protected routes, and page-specific configurations.
+This project is a modern **Next.js (App Router)** task management application built with TypeScript, Flowbite React, and React Hot Toast.  
+It includes authentication guard logic, protected routes, and comprehensive task management features.
 
 ---
 
 ## 🚀 Features
 - 🔐 **AuthGuard** using JWT token stored in localStorage
+- ✅ **Task Management** - Create, update, delete, and organize tasks
+- 📊 **Task Dashboard** - View task statistics and recent tasks
+- 🏷️ **Task Status** - Track tasks as pending, in-progress, or completed
+- 🎯 **Priority Levels** - Assign low, medium, or high priority to tasks
+- 🔍 **Task Filtering** - Filter tasks by status
 - 🧠 **Client/Server Components** separation
 - 💅 **Google Fonts Integration (Poppins, Geist, Geist Mono)**
 - ⚡ **Hot Toast Notifications**
@@ -23,9 +28,14 @@ src/
 │   ├── (Auth)/
 │   │   ├── login/
 │   │   ├── verify/
-│   │   └── register/
+│   │   └── signup/
+│   ├── dashboard/          # Main dashboard with task stats
+│   ├── tasks/              # Full task list view
 │   ├── _Components/
-│   │   └── (auth)/Auth/
+│   │   ├── (auth)/Auth/
+│   │   ├── Dashboard/
+│   │   ├── Tasks/
+│   │   └── Loading/
 │   ├── _utils/
 │   │   └── gurad/AuthGuard.tsx
 │   └── layout.tsx
@@ -39,8 +49,8 @@ src/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/nextjs-auth-app.git
-cd nextjs-auth-app
+git clone https://github.com/your-username/task-manager.git
+cd task-manager
 ```
 
 ### 2. Install Dependencies
@@ -79,6 +89,23 @@ npm start
 
 ---
 
+
+## 🐳 Docker Setup
+
+### Run with Docker Compose
+```bash
+docker-compose up -d
+```
+
+This will start:
+- Task Manager app on `http://localhost:3000`
+- MongoDB database with authentication
+
+### Docker Services
+- **taskmanager**: Next.js application
+- **mongo**: MongoDB database (root/example credentials)
+
+---
 
 ## 👨‍💻 Author
 **Mostafa Mnesey**  

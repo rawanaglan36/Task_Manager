@@ -64,10 +64,10 @@ export default function Registration() {
       <Card className="w-full max-w-md border border-[#BE968E] bg-white shadow-md">
         <div className="text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-[#BE968E]">
-            Create your account
+            Join Task Manager
           </h1>
           <p className="mt-2 text-sm text-neutral-600">
-            Sign up to get started
+            Create an account to start managing your tasks
           </p>
         </div>
 

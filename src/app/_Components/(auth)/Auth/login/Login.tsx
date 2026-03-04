@@ -64,10 +64,10 @@ export default function Login() {
       <Card className="w-full max-w-md border border-[#BE968E] bg-white shadow-md">
         <div className="text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-[#BE968E]">
-            Welcome back
+            Task Manager
           </h1>
           <p className="mt-2 text-sm text-neutral-600">
-            Sign in to your account
+            Sign in to manage your tasks
           </p>
         </div>
 
