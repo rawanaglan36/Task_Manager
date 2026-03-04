@@ -12,16 +12,16 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isLoginPage = pathname === "/login";
+  const isAuthPage = pathname === "/login" || pathname === "/signup" || pathname === "/verify";
 
   return (
     <>
-      {isLoginPage ? (
+      <Toaster position="top-right" reverseOrder={false} />
+      {isAuthPage ? (
         children
       ) : (
         <AuthGuard>
           {children}
-          <Toaster position="top-right" reverseOrder={false} />
         </AuthGuard>
       )}
     </>

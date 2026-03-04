@@ -60,85 +60,83 @@ export default function Login() {
   });
 
   return (
-    <div className="min-h-[80vh] w-full flex items-center justify-center bg-[#ffffff] px-4">
-      <Card className="w-full max-w-md border border-[#BE968E] bg-white shadow-md">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-[#BE968E]">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-8">
+      <Card className="w-full max-w-md shadow-xl border-0">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800">
             Task Manager
           </h1>
-          <p className="mt-2 text-sm text-neutral-600">
+          <p className="mt-2 text-sm text-gray-600">
             Sign in to manage your tasks
           </p>
         </div>
 
-        <form className="mt-2" onSubmit={formik.handleSubmit}>
-          <div className="space-y-4">
-            {/* Email */}
-            <div>
-              <Label
-                htmlFor="email"
-                className="mb-1 block text-sm font-medium text-neutral-800"
-              >
-                Email
-              </Label>
-              <TextInput
-                id="email"
-                type="email"
-                name="email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                placeholder="you@example.com"
-                required
-                className="focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-              />
-              {formik.errors.email && formik.touched.email && (
-                <p className="text-red-500 text-sm">{formik.errors.email}</p>
-              )}
-            </div>
+        <form className="space-y-5" onSubmit={formik.handleSubmit}>
+          {/* Email */}
+          <div>
+            <Label
+              htmlFor="email"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Email
+            </Label>
+            <TextInput
+              id="email"
+              type="email"
+              name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              placeholder="you@example.com"
+              required
+              color={formik.errors.email && formik.touched.email ? "failure" : "gray"}
+            />
+            {formik.errors.email && formik.touched.email && (
+              <p className="mt-1 text-xs text-red-600">{formik.errors.email}</p>
+            )}
+          </div>
 
-            {/* Password */}
-            <div>
-              <Label
-                htmlFor="password"
-                className="mb-1 block text-sm font-medium text-neutral-800"
+          {/* Password */}
+          <div>
+            <Label
+              htmlFor="password"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Password
+            </Label>
+            <div className="relative">
+              <TextInput
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                placeholder="••••••••"
+                required
+                color={formik.errors.password && formik.touched.password ? "failure" : "gray"}
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
               >
-                Password
-              </Label>
-              <div className="relative">
-                <TextInput
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  placeholder="••••••••"
-                  required
-                  className="pr-12 focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-                />
-                <button
-                  type="button"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-700 bg-transparent border-none p-0"
-                >
-                  {showPassword ? (
-                    <FaRegEye size={16} />
-                  ) : (
-                    <FaRegEyeSlash size={16} />
-                  )}
-                </button>
-              </div>
-              {formik.errors.password && formik.touched.password && (
-                <p className="text-red-500 text-sm">{formik.errors.password}</p>
-              )}
+                {showPassword ? (
+                  <FaRegEye size={18} />
+                ) : (
+                  <FaRegEyeSlash size={18} />
+                )}
+              </button>
             </div>
+            {formik.errors.password && formik.touched.password && (
+              <p className="mt-1 text-xs text-red-600">{formik.errors.password}</p>
+            )}
           </div>
 
           {/* Forgot Password Link */}
-          <div className="mt-4 text-right">
-            <span className="text-sm text-[#BE968E] cursor-pointer hover:underline">
+          <div className="text-right">
+            <span className="text-sm text-blue-600 cursor-pointer hover:underline">
               Forgot password?
             </span>
           </div>
@@ -146,15 +144,16 @@ export default function Login() {
           {/* Submit */}
           <Button
             type="submit"
-            className="mt-6 w-full bg-[#BE968E] hover:bg-[#BE968E]/80 focus:ring-[#BE968E]/30"
+            disabled={isLoading}
+            className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
           >
             {isLoading ? <Loader width="5" height="5" /> : "Sign in"}
           </Button>
 
-          <p className="mt-4 text-center text-sm text-neutral-600">
-            Do not have an account?{" "}
+          <p className="text-center text-sm text-gray-600">
+            Don't have an account?{" "}
             <span
-              className="font-medium text-[#BE968E] cursor-pointer hover:underline"
+              className="font-medium text-blue-600 cursor-pointer hover:underline"
               onClick={() => router.push("/signup")}
             >
               Sign up

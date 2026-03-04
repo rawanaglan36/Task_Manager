@@ -60,216 +60,210 @@ export default function Registration() {
   });
 
   return (
-    <div className="min-h-[80vh] w-full flex items-center justify-center bg-[#ffffff] px-4">
-      <Card className="w-full max-w-md border border-[#BE968E] bg-white shadow-md">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-[#BE968E]">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-8">
+      <Card className="w-full max-w-md shadow-xl border-0">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-gray-800">
             Join Task Manager
           </h1>
-          <p className="mt-2 text-sm text-neutral-600">
+          <p className="mt-2 text-sm text-gray-600">
             Create an account to start managing your tasks
           </p>
         </div>
 
-        <form className="mt-2" onSubmit={formik.handleSubmit}>
-          <div className="space-y-4">
-            {/* Full name */}
-            <div>
-              <Label
-                htmlFor="name"
-                className="mb-1 block text-sm font-medium text-neutral-800"
-              >
-                Full name
-              </Label>
-              <TextInput
-                id="name"
-                type="text"
-                name="name"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.name}
-                placeholder="John Doe"
-                required
-                color="gray"
-                className="focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-              />
-            </div>
+        <form className="space-y-4" onSubmit={formik.handleSubmit}>
+          {/* Full name */}
+          <div>
+            <Label
+              htmlFor="name"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Full name
+            </Label>
+            <TextInput
+              id="name"
+              type="text"
+              name="name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+              placeholder="John Doe"
+              required
+              color={formik.errors.name && formik.touched.name ? "failure" : "gray"}
+            />
             {formik.errors.name && formik.touched.name && (
-              <p className="text-red-500 text-sm">{formik.errors.name}</p>
+              <p className="mt-1 text-xs text-red-600">{formik.errors.name}</p>
             )}
+          </div>
 
-            {/* Email */}
-            <div>
+          {/* Email */}
+          <div>
+            <Label
+              htmlFor="email"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Email
+            </Label>
+            <TextInput
+              id="email"
+              type="email"
+              name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              placeholder="you@example.com"
+              required
+              color={formik.errors.email && formik.touched.email ? "failure" : "gray"}
+            />
+            {formik.errors.email && formik.touched.email && (
+              <p className="mt-1 text-xs text-red-600">{formik.errors.email}</p>
+            )}
+          </div>
+
+          {/* Phone with mobile code */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="col-span-1">
               <Label
-                htmlFor="email"
-                className="mb-1 block text-sm font-medium text-neutral-800"
+                htmlFor="mobileCode"
+                className="mb-2 block text-sm font-medium text-gray-700"
               >
-                Email
+                Code
+              </Label>
+              <Select
+                id="mobileCode"
+                name="mobile_country_code"
+                value={formik.values.mobile_country_code}
+                onChange={formik.handleChange}
+                required
+              >
+                {mobileCodes.map((code) => (
+                  <option key={code.value} value={code.value}>
+                    {code.label}
+                  </option>
+                ))}
+              </Select>
+            </div>
+
+            <div className="col-span-2">
+              <Label
+                htmlFor="mobile"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Mobile
               </Label>
               <TextInput
-                id="email"
-                type="email"
-                name="email"
-                onChange={formik.handleChange}
+                id="mobile"
+                type="tel"
+                name="mobile"
                 onBlur={formik.handleBlur}
-                value={formik.values.email}
-                placeholder="you@example.com"
+                value={formik.values.mobile}
+                onChange={formik.handleChange}
+                placeholder="555 123 4567"
                 required
-                className="focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
+                color={formik.errors.mobile && formik.touched.mobile ? "failure" : "gray"}
               />
             </div>
-            {formik.errors.email && formik.touched.email && (
-              <p className="text-red-500 text-sm">{formik.errors.email}</p>
-            )}
-            {/* Phone with mobile code */}
-            <div className="grid grid-cols-3 gap-3">
-              <div className="col-span-1">
-                <Label
-                  htmlFor="mobileCode"
-                  className="mb-1 block text-sm font-medium text-neutral-800"
-                >
-                  Mobile code
-                </Label>
-                <Select
-                  id="mobileCode"
-                  name="mobile_country_code"
-                  value={formik.values.mobile_country_code}
-                  onChange={formik.handleChange}
-                  required
-                  className="focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-                >
-                  {mobileCodes.map((code) => (
-                    <option key={code.value} value={code.value}>
-                      {code.label}
-                    </option>
-                  ))}
-                </Select>
-              </div>
+          </div>
+          {formik.errors.mobile && formik.touched.mobile && (
+            <p className="mt-1 text-xs text-red-600">{formik.errors.mobile}</p>
+          )}
 
-              <div className="col-span-2">
-                <Label
-                  htmlFor="mobile"
-                  className="mb-1 block text-sm font-medium text-neutral-800"
-                >
-                  mobile
-                </Label>
-                <div className="flex items-center">
-                  <span className="px-3 py-2 bg-gray-100 border rounded-lg mx-2  border-gray-300  text-gray-700">
-                    {formik.values.mobile_country_code}
-                  </span>
-                  <TextInput
-                    id="mobile"
-                    type="tel"
-                    name="mobile"
-                    onBlur={formik.handleBlur}
-                    value={formik.values.mobile}
-                    onChange={formik.handleChange}
-                    placeholder="555 123 4567"
-                    required
-                    className="rounded-l-none focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-                  />
-                </div>
-              </div>
+          {/* Password */}
+          <div>
+            <Label
+              htmlFor="password"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Password
+            </Label>
+            <div className="relative">
+              <TextInput
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                placeholder="••••••••"
+                required
+                minLength={6}
+                color={formik.errors.password && formik.touched.password ? "failure" : "gray"}
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? (
+                  <FaRegEye size={18} />
+                ) : (
+                  <FaRegEyeSlash size={18} />
+                )}
+              </button>
             </div>
-            {formik.errors.mobile && formik.touched.mobile && (
-              <p className="text-red-500 text-sm">{formik.errors.mobile}</p>
+            {formik.errors.password && formik.touched.password && (
+              <p className="mt-1 text-xs text-red-600">{formik.errors.password}</p>
             )}
-            {/* Password */}
-            <div>
-              <Label
-                htmlFor="password"
-                className="mb-1 block text-sm font-medium text-neutral-800"
-              >
-                Password
-              </Label>
-              <div className="relative">
-                <TextInput
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.password}
-                  placeholder=""
-                  required
-                  minLength={6}
-                  className="pr-10 focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-                />
-                <button
-                  type="button"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-800"
-                >
-                  {showPassword ? (
-                    <FaRegEye size={18} />
-                  ) : (
-                    <FaRegEyeSlash size={18} />
-                  )}
-                </button>
-              </div>
-              {formik.errors.password && formik.touched.password && (
-                <p className="text-red-500 text-sm">{formik.errors.password}</p>
-              )}
-            </div>
+          </div>
 
-            {/* Confirm Password */}
-            <div>
-              <Label
-                htmlFor="confirmPassword"
-                className="mb-1 block text-sm font-medium text-neutral-800"
+          {/* Confirm Password */}
+          <div>
+            <Label
+              htmlFor="confirmPassword"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Confirm password
+            </Label>
+            <div className="relative">
+              <TextInput
+                id="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                name="password_confirmation"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values.password_confirmation}
+                placeholder="••••••••"
+                required
+                minLength={6}
+                color={formik.errors.password_confirmation && formik.touched.password_confirmation ? "failure" : "gray"}
+              />
+              <button
+                type="button"
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
+                onClick={() => setShowConfirmPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
               >
-                Confirm password
-              </Label>
-              <div className="relative">
-                <TextInput
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="password_confirmation"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.password_confirmation}
-                  placeholder="••••••••"
-                  required
-                  minLength={6}
-                  className="pr-10 focus:ring-[#BE968E]/20 focus:border-[#BE968E]"
-                />
-                <button
-                  type="button"
-                  aria-label={
-                    showConfirmPassword
-                      ? "Hide confirm password"
-                      : "Show confirm password"
-                  }
-                  onClick={() => setShowConfirmPassword((v) => !v)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-800"
-                >
-                  {showConfirmPassword ? (
-                    <FaRegEye size={18} />
-                  ) : (
-                    <FaRegEyeSlash size={18} />
-                  )}
-                </button>
-              </div>
-              {formik.errors.password_confirmation && formik.touched.password_confirmation && (
-                <p className="text-red-500 text-sm">
-                  {formik.errors.password_confirmation}
-                </p>
-              )}
+                {showConfirmPassword ? (
+                  <FaRegEye size={18} />
+                ) : (
+                  <FaRegEyeSlash size={18} />
+                )}
+              </button>
             </div>
+            {formik.errors.password_confirmation && formik.touched.password_confirmation && (
+              <p className="mt-1 text-xs text-red-600">
+                {formik.errors.password_confirmation}
+              </p>
+            )}
           </div>
 
           {/* Submit */}
           <Button
             type="submit"
-            className="mt-6 w-full bg-[#BE968E] hover:bg-[#BE968E]/80 focus:ring-[#BE968E]/30"
+            disabled={isLoading}
+            className="w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
           >
-            {isLoading ? <Loader width="5" height="5" /> : "sign up"}
+            {isLoading ? <Loader width="5" height="5" /> : "Sign up"}
           </Button>
 
-          <p className="mt-4 text-center text-sm text-neutral-600">
-            Already have an account?
-            <span className="font-medium hover:underline text-[#BE968E] cursor-pointer" onClick={() => {
+          <p className="text-center text-sm text-gray-600">
+            Already have an account?{" "}
+            <span className="font-medium text-blue-600 cursor-pointer hover:underline" onClick={() => {
               router.push("/login");
             }}>
               Log in
