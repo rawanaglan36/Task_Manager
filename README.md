@@ -151,7 +151,7 @@ DevOps Engineer
 📧 [GitHub](https://github.com/rawanaglan36)  
 **Mostafa Menasy**  
 Web Developer   
-📧 [GitHub](https://github.com/rawanaglan36)  
+📧 [GitHub](https://github.com/MostafaMnesey)  
 🗓️ *2026*
 
 
