@@ -1,0 +1,19 @@
+version: '3'
+services:
+    taskmanager:
+        build: .
+       # image: taskmanager:latest
+        ports:
+            - "3000:3000"
+        volumes:
+            - .:/app
+        depends_on:
+            - mongo
+
+
+    mongo:
+      image: mongo
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
