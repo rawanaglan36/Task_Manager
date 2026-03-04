@@ -1,118 +1,154 @@
-# ✅ Task Manager (Full Authentication and Task Management With Next.js)
+# 📋 Task Manager - Modern Dark Theme
 
-This project is a modern **Next.js (App Router)** task management application built with TypeScript, Flowbite React, and React Hot Toast.  
-It includes authentication guard logic, protected routes, and comprehensive task management features.
+A sleek, modern task management application built with **Next.js 15**, featuring a beautiful dark theme UI and full Docker support for easy deployment.
 
----
-
-## 🚀 Features
-- 🔐 **AuthGuard** using JWT token stored in localStorage
-- ✅ **Task Management** - Create, update, delete, and organize tasks
-- 📊 **Task Dashboard** - View task statistics and recent tasks
-- 🏷️ **Task Status** - Track tasks as pending, in-progress, or completed
-- 🎯 **Priority Levels** - Assign low, medium, or high priority to tasks
-- 🔍 **Task Filtering** - Filter tasks by status
-- 🧠 **Client/Server Components** separation
-- 💅 **Google Fonts Integration (Poppins, Geist, Geist Mono)**
-- ⚡ **Hot Toast Notifications**
-- 🎨 **TailwindCSS + Flowbite React UI**
-- ✅ **Form Validation with Formik & Yup**
-- 🧭 **Dynamic Routing with next/navigation**
+![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black?style=flat-square&logo=next.js)
+![React](https://img.shields.io/badge/React-19.1.0-blue?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker)
 
 ---
 
-## 📂 Project Structure
+## ✨ Features
+
+### 🎨 Modern Dark Theme UI
+- Beautiful gradient backgrounds with glassmorphism effects
+- Smooth animations and transitions
+- Responsive design for all screen sizes
+- Intuitive and clean interface
+
+### 📝 Task Management
+- ✅ Create, update, and delete tasks
+- 🏷️ Task status tracking (Pending, In Progress, Completed)
+- 🎯 Priority levels (Low, Medium, High)
+- 📊 Real-time task statistics dashboard
+- 🔍 Filter tasks by status
+- 💾 Local storage persistence
+
+### 🚀 Technical Features
+- ⚡ Built with Next.js 15 (App Router)
+- 🎯 TypeScript for type safety
+- 🎨 Tailwind CSS for styling
+- 🔔 Toast notifications for user feedback
+- 📱 Fully responsive design
+- 🐳 Docker & Docker Compose ready
+- 🗄️ MongoDB integration support
+
+---
+
+## 🏗️ Project Structure
+
 ```
-src/
-├── app/
-│   ├── (Auth)/
-│   │   ├── login/
-│   │   ├── verify/
-│   │   └── signup/
-│   ├── dashboard/          # Main dashboard with task stats
-│   ├── tasks/              # Full task list view
-│   ├── _Components/
-│   │   ├── (auth)/Auth/
-│   │   ├── Dashboard/
-│   │   ├── Tasks/
-│   │   └── Loading/
-│   ├── _utils/
-│   │   └── gurad/AuthGuard.tsx
-│   └── layout.tsx
-└── styles/
-    └── globals.css
+task-manager/
+├── src/
+│   └── app/
+│       ├── dashboard/              # Main dashboard with stats
+│       ├── tasks/                  # Full task list view
+│       ├── _Components/
+│       │   ├── Dashboard/          # Dashboard components
+│       │   ├── Tasks/              # Task management components
+│       │   ├── Loading/            # Loading spinner
+│       │   └── LayoutWrapper/      # Layout wrapper
+│       ├── _utils/                 # Utility functions
+│       ├── layout.tsx              # Root layout
+│       └── page.tsx                # Home page
+├── public/                         # Static assets
+├── docker-compose.yml              # Docker Compose configuration
+├── Dockerfile                      # Docker image configuration
+└── package.json                    # Dependencies
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## � Docker Deployment
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/task-manager.git
-cd task-manager
-```
+### Using Docker Compose (Recommended)
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+The easiest way to run the application with all dependencies:
 
-### 3. Environment Variables
-Create a `.env.local` file in the root directory and add your environment variables if needed:
-```
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-### 4. Development Server
-```bash
-npm run dev
-```
-Then open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 5. Production Build
-```bash
-npm run build
-npm start
-```
-
-
-## 🧱 UI Stack
-| Library | Purpose |
-|----------|----------|
-| **Next.js 15+** | Framework |
-| **TypeScript** | Strong typing |
-| **TailwindCSS** | Styling |
-| **Flowbite React** | Components |
-| **Formik + Yup** | Form handling |
-| **React Hot Toast** | Notifications |
-
----
-
-
-## 🐳 Docker Setup
-
-### Run with Docker Compose
 ```bash
 docker-compose up -d
 ```
 
 This will start:
-- Task Manager app on `http://localhost:3000`
-- MongoDB database with authentication
+- **Task Manager App** on `http://localhost:3000`
+- **MongoDB Database** with authentication
 
-### Docker Services
-- **taskmanager**: Next.js application
-- **mongo**: MongoDB database (root/example credentials)
+### Docker Commands
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Rebuild and start
+docker-compose up -d --build
+
+# Stop and remove volumes
+docker-compose down -v
+```
+
+### Manual Docker Build
+
+```bash
+# Build the image
+docker build -t task-manager .
+
+# Run the container
+docker run -p 3000:3000 task-manager
+```
 
 ---
 
-## 👨‍💻 Author
-**Mostafa Mnesey**  
-Frontend Developer (React.js / Next.js)  
-🗓️ *2025*  
-📧 [GitHub](https://github.com/your-username)
+## 📦 Production Build
+
+### Local Production Build
+```bash
+npm run build
+npm start
+```
+
+### Docker Production Build
+The Dockerfile is optimized for production:
+- Multi-stage build for smaller image size
+- Production dependencies only
+- Optimized Next.js build
+- Port 3000 exposed
 
 ---
+
+## 🎯 Usage Guide
+
+### Dashboard
+- View task statistics at a glance
+- Quick task creation
+- See recent tasks (up to 5)
+- Navigate to full task list
+
+### Task Management
+1. **Create Task**: Enter title and description, then click "Add Task"
+2. **Update Status**: Click the check icon to cycle through statuses
+3. **Delete Task**: Click the trash icon to remove a task
+4. **Filter Tasks**: Use the dropdown to filter by status
+5. **Set Priority**: Choose priority level when creating tasks
+
+### Task Status Flow
+```
+Pending → In Progress → Completed → Pending (cycles)
+```
+
+---
+
+## �‍💻 Author
+
+**Rawan Aglan**  
+DevOps Engineer  
+📧 [GitHub](https://github.com/rawanaglan36)  
+🗓️ *2026*
 
 
