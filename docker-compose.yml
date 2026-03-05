@@ -2,6 +2,7 @@ version: '3'
 services:
     taskmanager:
         build: .
+        image: rawan36/taskmanager:latest
         ports:
             - "3000:3000"
         # volumes:

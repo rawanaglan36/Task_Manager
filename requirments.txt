@@ -1,0 +1,310 @@
+================================================================================
+                    TASK MANAGER - SERVER REQUIREMENTS
+================================================================================
+
+Project: Task Manager with Modern Dark Theme
+Repository: https://github.com/rawanaglan36/Task_Manager.git
+Author: Rawan Aglan - DevOps Engineer
+Year: 2026
+
+================================================================================
+                        SYSTEM REQUIREMENTS
+================================================================================
+
+Operating System:
+  - Ubuntu 20.04 LTS or higher (recommended)
+  - CentOS 7/8
+  - Debian 10+
+  - Any Linux distribution with Docker support
+
+Minimum Hardware:
+  - CPU: 2 cores
+  - RAM: 2GB (4GB recommended)
+  - Storage: 10GB free space
+  - Network: Internet connection for pulling Docker images
+
+================================================================================
+                        SOFTWARE REQUIREMENTS
+================================================================================
+
+1. Docker
+   - Version: 20.10.0 or higher
+   - Installation: https://docs.docker.com/engine/install/
+   
+   Ubuntu/Debian Installation:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install docker.io
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   ```
+
+2. Docker Compose
+   - Version: 2.0.0 or higher
+   - Installation: https://docs.docker.com/compose/install/
+   
+   Installation:
+   ```bash
+   sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+   ```
+
+3. Git
+   - Version: 2.0 or higher
+   
+   Installation:
+   ```bash
+   sudo apt-get install git
+   ```
+
+4. Optional (for non-Docker deployment):
+   - Node.js: 18.x or higher
+   - npm: 9.x or higher
+
+================================================================================
+                        PORT REQUIREMENTS
+================================================================================
+
+Required Ports (must be open):
+  - 3000: Task Manager Application (HTTP)
+  - 27017: MongoDB Database (internal, can be closed externally)
+
+Firewall Configuration:
+```bash
+# Ubuntu/Debian with UFW
+sudo ufw allow 3000/tcp
+sudo ufw enable
+
+# CentOS/RHEL with firewalld
+sudo firewall-cmd --permanent --add-port=3000/tcp
+sudo firewall-cmd --reload
+```
+
+================================================================================
+                        DEPLOYMENT STEPS
+================================================================================
+
+1. Clone Repository
+   ```bash
+   git clone https://github.com/rawanaglan36/Task_Manager.git
+   cd Task_Manager
+   ```
+
+2. Environment Configuration (Optional)
+   Create .env.local file if needed:
+   ```bash
+   echo "NEXT_PUBLIC_BASE_URL=http://your-server-ip:5000" > .env.local
+   ```
+
+3. Build and Start with Docker Compose
+   ```bash
+   docker-compose up -d --build
+   ```
+
+4. Verify Deployment
+   ```bash
+   docker-compose ps
+   docker-compose logs -f
+   ```
+
+5. Access Application
+   Open browser: http://your-server-ip:3000
+
+================================================================================
+                        DOCKER SERVICES
+================================================================================
+
+Service 1: taskmanager
+  - Image: Built from Dockerfile
+  - Port: 3000:3000
+  - Volumes: .:/app (for development)
+  - Depends on: MongoDB
+
+Service 2: mongo
+  - Image: mongo:latest
+  - Environment:
+    * MONGO_INITDB_ROOT_USERNAME: root
+    * MONGO_INITDB_ROOT_PASSWORD: example
+  - Restart: always
+
+================================================================================
+                        USEFUL COMMANDS
+================================================================================
+
+Docker Compose Commands:
+  - Start services: docker-compose up -d
+  - Stop services: docker-compose down
+  - View logs: docker-compose logs -f
+  - Restart services: docker-compose restart
+  - Rebuild: docker-compose up -d --build
+  - Remove volumes: docker-compose down -v
+
+Docker Commands:
+  - List containers: docker ps
+  - View logs: docker logs <container-id>
+  - Execute command: docker exec -it <container-id> bash
+  - Remove all stopped containers: docker container prune
+  - Remove unused images: docker image prune
+
+System Monitoring:
+  - Check disk space: df -h
+  - Check memory: free -h
+  - Check CPU: top or htop
+  - Check Docker stats: docker stats
+
+================================================================================
+                        TROUBLESHOOTING
+================================================================================
+
+Issue: Port 3000 already in use
+Solution:
+  ```bash
+  sudo lsof -i :3000
+  sudo kill -9 <PID>
+  ```
+
+Issue: Docker permission denied
+Solution:
+  ```bash
+  sudo usermod -aG docker $USER
+  newgrp docker
+  ```
+
+Issue: Cannot connect to Docker daemon
+Solution:
+  ```bash
+  sudo systemctl start docker
+  sudo systemctl status docker
+  ```
+
+Issue: MongoDB connection failed
+Solution:
+  - Check if MongoDB container is running: docker-compose ps
+  - Check MongoDB logs: docker-compose logs mongo
+  - Restart services: docker-compose restart
+
+Issue: Application not loading
+Solution:
+  - Check container logs: docker-compose logs taskmanager
+  - Verify port is open: sudo netstat -tulpn | grep 3000
+  - Rebuild containers: docker-compose up -d --build
+
+================================================================================
+                        PRODUCTION CONSIDERATIONS
+================================================================================
+
+Security:
+  1. Change MongoDB default credentials in docker-compose.yml
+  2. Use environment variables for sensitive data
+  3. Enable firewall and allow only necessary ports
+  4. Keep Docker and system packages updated
+  5. Use HTTPS with SSL/TLS certificates (nginx/caddy reverse proxy)
+
+Performance:
+  1. Allocate sufficient resources (CPU/RAM)
+  2. Use Docker volume for MongoDB data persistence
+  3. Enable Docker logging limits
+  4. Monitor resource usage regularly
+
+Backup:
+  1. Backup MongoDB data regularly
+  2. Backup application code and configuration
+  3. Document any custom changes
+
+Monitoring:
+  1. Set up container health checks
+  2. Monitor application logs
+  3. Track resource usage
+  4. Set up alerts for downtime
+
+================================================================================
+                        REVERSE PROXY SETUP (OPTIONAL)
+================================================================================
+
+Using Nginx as Reverse Proxy:
+
+1. Install Nginx:
+   ```bash
+   sudo apt-get install nginx
+   ```
+
+2. Create Nginx configuration:
+   ```bash
+   sudo nano /etc/nginx/sites-available/taskmanager
+   ```
+
+3. Add configuration:
+   ```nginx
+   server {
+       listen 80;
+       server_name your-domain.com;
+
+       location / {
+           proxy_pass http://localhost:3000;
+           proxy_http_version 1.1;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection 'upgrade';
+           proxy_set_header Host $host;
+           proxy_cache_bypass $http_upgrade;
+       }
+   }
+   ```
+
+4. Enable site:
+   ```bash
+   sudo ln -s /etc/nginx/sites-available/taskmanager /etc/nginx/sites-enabled/
+   sudo nginx -t
+   sudo systemctl restart nginx
+   ```
+
+================================================================================
+                        SSL/TLS SETUP (OPTIONAL)
+================================================================================
+
+Using Let's Encrypt with Certbot:
+
+1. Install Certbot:
+   ```bash
+   sudo apt-get install certbot python3-certbot-nginx
+   ```
+
+2. Obtain certificate:
+   ```bash
+   sudo certbot --nginx -d your-domain.com
+   ```
+
+3. Auto-renewal:
+   ```bash
+   sudo certbot renew --dry-run
+   ```
+
+================================================================================
+                        MAINTENANCE
+================================================================================
+
+Regular Tasks:
+  - Update Docker images: docker-compose pull && docker-compose up -d
+  - Clean unused Docker resources: docker system prune -a
+  - Check logs for errors: docker-compose logs --tail=100
+  - Monitor disk space: df -h
+  - Backup MongoDB data weekly
+
+Update Application:
+  ```bash
+  cd Task_Manager
+  git pull origin main
+  docker-compose up -d --build
+  ```
+
+================================================================================
+                        SUPPORT & DOCUMENTATION
+================================================================================
+
+Project Repository: https://github.com/rawanaglan36/Task_Manager.git
+Docker Documentation: https://docs.docker.com/
+Docker Compose Documentation: https://docs.docker.com/compose/
+Next.js Documentation: https://nextjs.org/docs
+
+================================================================================
+                        END OF REQUIREMENTS
+================================================================================
